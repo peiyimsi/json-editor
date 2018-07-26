@@ -3,7 +3,7 @@ JSONEditor.Validator = Class.extend({
     this.jsoneditor = jsoneditor;
     this.schema = schema || this.jsoneditor.schema;
     this.options = options || {};
-    this.translate = this.jsoneditor.translate || JSONEditor.defaults.translate;
+    this.defaultTranslate = this.jsoneditor.translate || JSONEditor.defaults.translate;
   },
   validate: function(value) {
     return this._validateSchema(this.schema, value);
@@ -18,7 +18,16 @@ JSONEditor.Validator = Class.extend({
 
     // Work on a copy of the schema
     schema = $extend({},this.jsoneditor.expandRefs(schema));
-
+	
+	// Loading schema language overrides
+	 this.translate = function(){
+      if(schema.options && schema.options.language && schema.options.language[arguments[0]]){
+        return schema.options.language[arguments[0]];
+      } else {
+        return this.defaultTranslate.apply(this,arguments); 
+      }
+    };
+	
     /*
      * Type Agnostic Validation
      */
