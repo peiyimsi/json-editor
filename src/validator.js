@@ -24,7 +24,7 @@ JSONEditor.Validator = Class.extend({
       if(schema.options && schema.options.language && schema.options.language[arguments[0]]){
         return schema.options.language[arguments[0]];
       } else {
-        return this.defaultTranslate.apply(this,arguments); 
+        return this.defaultTranslate.apply(this,arguments);
       }
     };
 	
